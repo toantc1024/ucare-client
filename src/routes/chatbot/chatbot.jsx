@@ -51,14 +51,14 @@ const Chatbot = () => {
           </div>
         </div>
         <div className="chatbot__body">
-          <div className="chatbot__body__content">
+          <div className="chatbot__body__content flex flex-col gap-2">
             {chat.map((item, index) => {
               return (
-                <div key={index} className="chatbot__body__content__message">
-                  <div className="chatbot__body__content__message__user">
+                <div key={index} className="chatbot__body__content__message ">
+                  <div className="chatbot__body__content__message__user bg-red-400 p-2 rounded-sm">
                     <p>{item.message}</p>
                   </div>
-                  <div className="chatbot__body__content__message__bot">
+                  <div className="chatbot__body__content__message__bot bg-blue-400 p-2 rounded-sm">
                     <p>{item.response}</p>
                   </div>
                 </div>
