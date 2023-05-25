@@ -33,11 +33,11 @@ const Home = () => {
             </a>
           </div>
           <div class="lg:mt-0 lg:col-span-5 lg:flex">
-            <div className="absolute z-[-1] right-[300px] top-50 w-80 h-80 bg-sky-500 rounded-full bg-gradient-to-r from-emerald-400 to-sky-500 flex justify-center items-center text-8xl text-white drop-shadow-lg">
+            <div className="absolute z-[1] right-[300px] top-50 w-80 h-80 rounded-full bg-gradient-to-r from-emerald-400 to-sky-500 flex justify-center items-center text-8xl text-white drop-shadow-lg">
               <MdMedicalServices className="drop-shadow-lg" />
             </div>
 
-            <div className="absolute right-[50px] top-50  w-80 h-80 bg-sky-500 rounded-full bg-gradient-to-r from-emerald-400 to-sky-500 flex justify-center items-center text-8xl text-white  drop-shadow-lg">
+            <div className="absolute z-[2] right-[50px] top-50  w-80 h-80 rounded-full bg-gradient-to-r from-emerald-400 to-sky-500 flex justify-center items-center text-8xl text-white  drop-shadow-lg">
               <MdHealthAndSafety className="drop-shadow-lg" />
             </div>
           </div>
@@ -78,8 +78,19 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      
+      <footer class="p-4 bg-gray-900 sm:p-6">
+        <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
+        <div class="mx-auto max-w-screen-xl">
+          <div class="sm:flex sm:items-center sm:justify-between">
+            <span class="text-sm text-white sm:text-center">
+              @2023{" "}
+              <a href="#" class="hover:underline">
+                Ucare- P0t4t03s team.
+              </a>
+            </span>
+          </div>
+        </div>
+      </footer>
     </Fragment>
   );
 };

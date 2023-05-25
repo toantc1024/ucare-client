@@ -16,7 +16,7 @@ const Navigation = () => {
 
   return (
     <Fragment>
-      <nav class="relative fixed py-4 border-gray-200 dark:bg-gray-900 px-4 absolute ">
+      <nav class="relative py-4 border-gray-200 dark:bg-gray-900 px-4 ">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ml-4 mr-4">
           {
             // <div className="left-[-5px] rounded-full w-10 h-10 bg-gradient-to-r from-emerald-400 to-sky-500  absolute z-[-10] "></div>
@@ -64,7 +64,7 @@ const Navigation = () => {
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                   <img
-                    className="h-10 w-10 rounded-full  hover:cursor-pointer hover:bg-gray-200 rounded-full"
+                    className="h-10 w-10 hover:cursor-pointer hover:bg-gray-200 rounded-full"
                     src="https://lh3.googleusercontent.com/a/AAcHTtfYV5CJXYi93tJ21f3JIVnQ_J6ep17JKkNDkSvjfQ=s83-c-mo"
                     alt=""
                   />
