@@ -1,5 +1,5 @@
 import React from "react";
-
+import Whalebg from "../../assets/whalebg.jpg"
 const TextInput = ({ messageValue, handleChange, sendMessage }) => {
   return (
     <div class="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
@@ -9,6 +9,10 @@ const TextInput = ({ messageValue, handleChange, sendMessage }) => {
       <div
         id="messages"
         class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+        style={{
+          backgroundImage: "url(" + Whalebg + ")",
+          backgroundSize: "500px 500px",
+        }}
       >
         {/* đoạn chat chào từ AI*/}
         <div class="chat-message">
