@@ -1,39 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { MdMedicalServices, MdHealthAndSafety } from "react-icons/md";
 
-import "./style.css";
-
 const Home = () => {
-  // const [completedTyping, setCompletedTyping] = useState(false);
-
-  // const [displayResponse, setDisplayResponse] = useState("");
-  // const [chatHistory, setChatHistory] = useState([
-  //   {
-  //     content: "care",
-  //     sender: "bot",
-  //   },
-  // ]);
-
-  // useEffect(() => {
-  //   setCompletedTyping(false);
-
-  //   let i = 0;
-  //   const stringResponse = chatHistory[chatHistory.length - 1].content;
-
-  //   const intervalId = setInterval(() => {
-  //     setDisplayResponse(stringResponse.slice(0, i));
-
-  //     i++;
-
-  //     if (i > stringResponse.length) {
-  //       clearInterval(intervalId);
-  //       setCompletedTyping(true);
-  //     }
-  //   }, 20);
-
-  //   return () => clearInterval(intervalId);
-  // }, [chatHistory]);
-
   return (
     <Fragment>
       <div className="relative flex w-full h-100  justify-between bg-[rgba(255,255,255, .5)]  items-center px-4 backdrop-blur-sm">
