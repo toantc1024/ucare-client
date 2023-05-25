@@ -26,7 +26,7 @@ const Navigation = () => {
   return (
     <Fragment>
       <nav class="flex gap-2 items-center justify-between relative fixed py-4 border-gray-200 dark:bg-gray-900 px-4 border-[1px] ">
-        <div class="w-full flex flex-wrap items-center justify-between mx-auto p-4 ml-4 mr-4">
+        <div class="w-full  flex flex-wrap items-center justify-between mx-auto p-4 ml-4 mr-4">
           {
             // <div className="left-[-5px] rounded-full w-10 h-10 bg-gradient-to-r from-emerald-400 to-sky-500  absolute z-[-10] "></div>
           }
