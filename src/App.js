@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./routes/navigation/navigation.component";
 import Home from "./routes/home/home.component";
@@ -7,6 +7,7 @@ import Profile from "./routes/profile/profile";
 import Chatbot from "./routes/chatbot/chatbot";
 import PageNotFound from "./routes/404/pagenotfound";
 import SignUp from "./routes/authentication/signup.component";
+import { fetchUser } from "./utils/firebase/firebase.utils";
 const App = () => {
   return (
     <Routes>

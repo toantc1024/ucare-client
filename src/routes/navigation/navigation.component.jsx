@@ -1,6 +1,9 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LinkTag from "../../components/navigation/navLink";
+import { getCurrentUser } from "../../utils/backend-data/user";
+import { fetchUser } from "../../utils/firebase/firebase.utils";
+import { getAuth } from "firebase/auth";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -14,10 +17,16 @@ const Navigation = () => {
 
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const user = fetchUser();
+    console.log(user);
+    setUser(user);
+  }, [getAuth()]);
+
   return (
     <Fragment>
-      <nav class="relative fixed py-4 border-gray-200 dark:bg-gray-900 px-4 border-[1px] absolute ">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ml-4 mr-4">
+      <nav class="flex gap-2 items-center justify-between relative fixed py-4 border-gray-200 dark:bg-gray-900 px-4 border-[1px] ">
+        <div class="w-full flex flex-wrap items-center justify-between mx-auto p-4 ml-4 mr-4">
           {
             // <div className="left-[-5px] rounded-full w-10 h-10 bg-gradient-to-r from-emerald-400 to-sky-500  absolute z-[-10] "></div>
           }
@@ -25,8 +34,12 @@ const Navigation = () => {
             className="font-bold relative hover:cursor-pointer"
             onClick={() => navigate("./")}
           >
-            <h1 className="text-3xl z-[100] ">Ucare</h1>
-            <div className="bg-gradient-to-r from-emerald-400 to-sky-500 w-4 h-4  rounded-full  top-0 absolute  z-[0] right-[-10px] blur-4 drop-filter-blur"></div>
+            <h1 className="text-3xl z-[100] ">WhaleCare</h1>
+            <div className="bg-gradient-to-r from-emerald-400 to-sky-500 bg-none  rounded-full  top-0 absolute  z-[0] right-[-10px] blur-4 drop-filter-blur">
+              <sup className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-600 text-3xl">
+                +
+              </sup>
+            </div>
           </div>
 
           <div className="flex gap-8 justify-center items-center p-1 rounded-full">
@@ -121,7 +134,10 @@ const Navigation = () => {
                   <li>
                     <a
                       href=""
-                      onClick={() => handleNavigate("./")}
+                      onClick={() => {
+                        localStorage.removeItem("user");
+                        handleNavigate("./");
+                      }}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       Sign out
