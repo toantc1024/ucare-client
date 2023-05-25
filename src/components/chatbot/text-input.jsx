@@ -3,13 +3,13 @@ import React from "react";
 const TextInput = ({ messageValue, handleChange, sendMessage }) => {
   return (
     <div>
-      <label for="chat" class="sr-only">
+      <label htmlFor="chat" className="sr-only">
         Nhập câu hỏi
       </label>
-      <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+      <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
         <textarea
           id="chat"
-          class="
+          className="
         py-4
           overflow-auto
           focus:outline-none
@@ -22,18 +22,18 @@ const TextInput = ({ messageValue, handleChange, sendMessage }) => {
         <div className="flex items-end justify-end">
           <button
             type="submit"
-            class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600"
+            className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600"
           >
             <svg
               aria-hidden="true"
-              class="w-6 h-6 rotate-90"
+              className="w-6 h-6 rotate-90"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
             </svg>
-            <span class="sr-only">Nhập câu hỏi</span>
+            <span className="sr-only">Nhập câu hỏi</span>
           </button>
         </div>
       </div>
