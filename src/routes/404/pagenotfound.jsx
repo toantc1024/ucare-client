@@ -36,7 +36,7 @@ const PageNotFound = () => {
             <span>Return Home</span>
           </button>
         </div>
-        <div className="w-1/2 lg:h-full flex lg:items-end justify-center">
+        <div className="w-[500px] lg:h-full flex lg:items-end justify-center">
           <img src={CatImage} alt="" className="lg:h-full object-scale-down" />
         </div>
       </div>
