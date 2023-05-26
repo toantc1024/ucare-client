@@ -73,7 +73,7 @@ const Login = ({ setCurrentUser }) => {
                 </div>
                 <a
                   href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline "
+                  className="text-sm font-medium text-primary-600 hover:underline hover:text-red-600"
                 >
                   Forgot password?
                 </a>
@@ -142,7 +142,7 @@ const Login = ({ setCurrentUser }) => {
                 Don’t have an account yet?{" "}
                 <Link
                   to={"/signup"}
-                  className="font-medium text-gray-900 hover:underline "
+                  className="font-medium text-primary-600 hover:underline hover:text-red-600"
                 >
                   Sign up
                 </Link>
