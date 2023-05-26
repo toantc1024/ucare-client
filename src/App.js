@@ -8,16 +8,47 @@ import Chatbot from "./routes/chatbot/chatbot";
 import PageNotFound from "./routes/404/pagenotfound";
 import SignUp from "./routes/authentication/signup.component";
 import { fetchUser } from "./utils/firebase/firebase.utils";
+import { useState } from "react";
+import { getAuth } from "firebase/auth";
+import Dashboard from "./routes/dashboard/dashboard";
 const App = () => {
+  const [user, setUser] = useState(null);
+  const [language, setLanguage] = useState("en");
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
     <Routes>
-      <Route path="/" element={<Navigation />}>
+      <Route
+        path="/"
+        element={
+          <Navigation
+            setCurrentUser={(user) => {
+              console.log(user);
+              setUser(user);
+            }}
+            user={user}
+          />
+        }
+      >
         <Route path="*" element={<PageNotFound />} />
         <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
+        <Route
+          path="login"
+          element={
+            <Login
+              setCurrentUser={(user) => {
+                console.log(user);
+                setUser(user);
+              }}
+            />
+          }
+        />
         <Route path="signup" element={<SignUp />} />
-        <Route path="dashboard" element={<Login />} />
-        <Route path="profile" element={<Profile />}>
+        <Route path="dashboard" element={<Dashboard user={user} />} />
+        <Route path="profile" element={<Profile user={user} />}>
           <Route path="setting" element={<h1>Setting</h1>} />
         </Route>
         <Route path="chat" element={<Chatbot />} />

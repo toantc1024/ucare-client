@@ -1,10 +1,21 @@
 import React from "react";
-import { signInGoogleWithPopup } from "../../utils/firebase/firebase.utils";
+import {
+  getUserProfile,
+  signInGoogleWithPopup,
+} from "../../utils/firebase/firebase.utils";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  browserLocalPersistence,
+  getAuth,
+  setPersistence,
+} from "firebase/auth";
 
-const Login = () => {
+const Login = ({ setCurrentUser }) => {
+  const navigate = useNavigate();
+
   return (
     <section class="">
-      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-auto !pt-28 !pb-28 lg:py-0 bg-gradient-to-r from-purple-500 to-pink-500">
+      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-auto !pt-28 !pb-28 lg:py-0 bg-gradient-to-r from-emerald-500 to-sky-400">
         <div class="w-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
@@ -78,10 +89,15 @@ const Login = () => {
               </div>
 
               <a
-                onClick={() => {
-                  signInGoogleWithPopup();
+                onClick={async () => {
+                  try {
+                    await signInGoogleWithPopup();
+                    const auth = getAuth();
+                    setCurrentUser(auth.currentUser);
+                    navigate("/");
+                  } catch (error) {}
                 }}
-                class="mb-3 flex w-full items-center justify-center rounded bg-primary px-7 pb-2.5 pt-3 text-center text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-red-500 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-red-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-red-500 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] bg-red-700"
+                class="mb-3 flex w-full items-center justify-center rounded-lg bg-primary px-7 pb-2.5 pt-3 text-center text-sm font-medium  leading-normal text-gray-700 bg-white drop-shadow-lg hover:bg-[rgba(255,255,255,.75)] transition-bg duration-100 ease-in-out"
                 href="#!"
                 role="button"
                 data-te-ripple-init
@@ -124,12 +140,12 @@ const Login = () => {
               </a>
               <p class="text-sm font-light text-white">
                 Don’t have an account yet?{" "}
-                <a
-                  href="#"
-                  class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                <Link
+                  to={"/signup"}
+                  class="font-medium text-gray-900 hover:underline "
                 >
                   Sign up
-                </a>
+                </Link>
               </p>
             </form>
           </div>

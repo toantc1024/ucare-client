@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import {
   getAuth,
   signInWithPopup,
@@ -52,14 +52,31 @@ export const signInGoogleWithPopup = async () => {
   }
 };
 
+export const getUserProfile = async (user, name) => {
+  try {
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+    console.log(docSnap, user);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      await setUpNewProfile(user, name);
+      return document;
+    }
+  } catch (error) {
+    console.log(user.uid, error);
+    return false;
+  }
+};
+
 export const setUpNewProfile = async (user, name) => {
   try {
     console.log(user, name);
-    await setDoc(doc(db, "users", user.uid), {
+    const document = await setDoc(doc(db, "users", user.uid), {
       name: name,
       email: user.email,
     });
-    return true;
+    return document;
   } catch (error) {
     return false;
   }

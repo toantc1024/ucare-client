@@ -13,3 +13,31 @@ export const chatQuery = async (text) => {
     console.log(error);
   }
 };
+
+const keyword = [
+  "lập lịch uống nước",
+  "tập thể dục",
+  "food",
+  "mediation",
+  "thiền",
+  "nước",
+  "chạy",
+  "thể dục",
+  "fit",
+];
+
+export const getRecommendations = (text) => {
+  const words = text.split(" ");
+  const recommendations = [];
+
+  words.forEach((word) => {
+    keyword.forEach((key) => {
+      const keys = key.split(" ");
+      if (keys.includes(word.toLowerCase()) && !recommendations.includes(key)) {
+        recommendations.push(key);
+      }
+    });
+  });
+
+  return recommendations;
+};

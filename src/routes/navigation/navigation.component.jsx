@@ -5,7 +5,7 @@ import { getCurrentUser } from "../../utils/backend-data/user";
 import { fetchUser } from "../../utils/firebase/firebase.utils";
 import { getAuth } from "firebase/auth";
 
-const Navigation = () => {
+const Navigation = ({ user, setCurrentUser }) => {
   const navigate = useNavigate();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,14 +14,6 @@ const Navigation = () => {
     setIsMenuOpen(false);
     navigate(path);
   };
-
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const user = fetchUser();
-    console.log(user);
-    setUser(user);
-  }, [getAuth()]);
 
   return (
     <Fragment>
@@ -72,16 +64,65 @@ const Navigation = () => {
             </div>
             <div className="relative">
               {user ? (
-                <div
-                  className="hover:cursor-pointer hover:bg-gray-200  p-1 rounded-full"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                >
-                  <img
-                    className="h-10 w-10 rounded-full  hover:cursor-pointer hover:bg-gray-200 rounded-full"
-                    src="https://lh3.googleusercontent.com/a/AAcHTtfYV5CJXYi93tJ21f3JIVnQ_J6ep17JKkNDkSvjfQ=s83-c-mo"
-                    alt=""
-                  />
-                </div>
+                <Fragment>
+                  <div
+                    className="hover:cursor-pointer hover:bg-gray-200  p-1 rounded-full"
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  >
+                    <img
+                      className="h-10 w-10 rounded-full  hover:cursor-pointer hover:bg-gray-200 rounded-full"
+                      src={user.photoURL}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    class={`z-50 ${
+                      !isMenuOpen ? "hidden" : ""
+                    } absolute right-[40px] md:right-[0px] my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
+                    id="user-}dropdown"
+                  >
+                    <div class="px-4 py-3">
+                      <span class="block text-sm text-gray-900 dark:text-white">
+                        {user.name}
+                      </span>
+                      <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
+                        {user.email}
+                      </span>
+                    </div>
+                    <ul class="py-2" aria-labelledby="user-menu-button">
+                      <li>
+                        <Link
+                          onClick={() => setIsMenuOpen(false)}
+                          to={"./profile"}
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          onClick={() => setIsMenuOpen(false)}
+                          to={"./setting"}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Settings
+                        </Link>
+                      </li>
+                      <li>
+                        <a
+                          onClick={() => {
+                            setCurrentUser(null);
+                            localStorage.removeItem("user");
+                            handleNavigate("./");
+                          }}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Sign out
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </Fragment>
               ) : (
                 <div className="flex gap-2 items-center justify-center">
                   <button
@@ -98,53 +139,6 @@ const Navigation = () => {
                   </button>
                 </div>
               )}
-              <div
-                class={`z-50 ${
-                  !isMenuOpen ? "hidden" : ""
-                } absolute right-[40px] md:right-[0px] my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
-                id="user-}dropdown"
-              >
-                <div class="px-4 py-3">
-                  <span class="block text-sm text-gray-900 dark:text-white">
-                    Tran Cong Toan
-                  </span>
-                  <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                    tctoan1024@gmail.com
-                  </span>
-                </div>
-                <ul class="py-2" aria-labelledby="user-menu-button">
-                  <li>
-                    <Link
-                      onClick={() => setIsMenuOpen(false)}
-                      to={"./profile"}
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      onClick={() => setIsMenuOpen(false)}
-                      to={"./setting"}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Settings
-                    </Link>
-                  </li>
-                  <li>
-                    <a
-                      href=""
-                      onClick={() => {
-                        localStorage.removeItem("user");
-                        handleNavigate("./");
-                      }}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>
