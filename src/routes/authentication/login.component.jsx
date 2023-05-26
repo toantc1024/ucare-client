@@ -14,18 +14,18 @@ const Login = ({ setCurrentUser }) => {
   const navigate = useNavigate();
 
   return (
-    <section class="">
-      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-auto !pt-28 !pb-28 lg:py-0 bg-gradient-to-r from-emerald-500 to-sky-400">
-        <div class="w-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
+    <section className="">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-auto !pt-28 !pb-28 lg:py-0 bg-gradient-to-r from-emerald-500 to-sky-400">
+        <div className="w-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
               Sign in to your account
             </h1>
-            <form class="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" action="#">
               <div>
                 <label
                   for="email"
-                  class="block mb-2 text-sm font-medium text-white "
+                  className="block mb-2 text-sm font-medium text-white "
                 >
                   Your email
                 </label>
@@ -33,7 +33,7 @@ const Login = ({ setCurrentUser }) => {
                   type="email"
                   name="email"
                   id="email"
-                  class="bg-gray-50 border border-gray-300 text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 border border-gray-300 text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   placeholder="name@company.com"
                   required=""
                 />
@@ -41,7 +41,7 @@ const Login = ({ setCurrentUser }) => {
               <div>
                 <label
                   for="password"
-                  class="block mb-2 text-sm font-medium text-white "
+                  className="block mb-2 text-sm font-medium text-white "
                 >
                   Password
                 </label>
@@ -50,42 +50,42 @@ const Login = ({ setCurrentUser }) => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  class="bg-gray-50 border border-gray-300 text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 border border-gray-300 text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required=""
                 />
               </div>
-              <div class="flex items-center justify-between">
-                <div class="flex items-start">
-                  <div class="flex items-center h-5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
                     <input
                       id="remember"
                       aria-describedby="remember"
                       type="checkbox"
-                      class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
+                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
                       required=""
                     />
                   </div>
-                  <div class="ml-3 text-sm">
-                    <label for="remember" class="text-white">
+                  <div className="ml-3 text-sm">
+                    <label for="remember" className="text-white">
                       Remember me
                     </label>
                   </div>
                 </div>
                 <a
                   href="#"
-                  class="text-sm font-medium text-primary-600 hover:underline "
+                  className="text-sm font-medium text-primary-600 hover:underline "
                 >
                   Forgot password?
                 </a>
               </div>
               <button
                 type="submit"
-                class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 "
+                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 "
               >
                 Sign in
               </button>
-              <div class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-                <p class="mx-4 mb-0 text-center font-semibold ">OR</p>
+              <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
+                <p className="mx-4 mb-0 text-center font-semibold ">OR</p>
               </div>
 
               <a
@@ -97,7 +97,7 @@ const Login = ({ setCurrentUser }) => {
                     navigate("/");
                   } catch (error) {}
                 }}
-                class="mb-3 flex w-full items-center justify-center rounded-lg bg-primary px-7 pb-2.5 pt-3 text-center text-sm font-medium  leading-normal text-gray-700 bg-white drop-shadow-lg hover:bg-[rgba(255,255,255,.75)] transition-bg duration-100 ease-in-out"
+                className="mb-3 flex w-full items-center justify-center rounded-lg bg-primary px-7 pb-2.5 pt-3 text-center text-sm font-medium  leading-normal text-gray-700 bg-white drop-shadow-lg hover:bg-[rgba(255,255,255,.75)] transition-bg duration-100 ease-in-out"
                 href="#!"
                 role="button"
                 data-te-ripple-init
@@ -105,7 +105,7 @@ const Login = ({ setCurrentUser }) => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="mr-2 h-3.5 w-3.5"
+                  className="mr-2 h-3.5 w-3.5"
                   viewBox="0 0 186.69 190.5"
                   xmlnsV="https://vecta.io/nano"
                 >
@@ -138,11 +138,11 @@ const Login = ({ setCurrentUser }) => {
                 </svg>
                 Continue with Goggle
               </a>
-              <p class="text-sm font-light text-white">
+              <p className="text-sm font-light text-white">
                 Don’t have an account yet?{" "}
                 <Link
                   to={"/signup"}
-                  class="font-medium text-gray-900 hover:underline "
+                  className="font-medium text-gray-900 hover:underline "
                 >
                   Sign up
                 </Link>
