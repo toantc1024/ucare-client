@@ -16,8 +16,11 @@ const App = () => {
   const [language, setLanguage] = useState("en");
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setUser(user);
+    }
+  }, []);
 
   return (
     <Routes>
@@ -46,7 +49,17 @@ const App = () => {
             />
           }
         />
-        <Route path="signup" element={<SignUp />} />
+        <Route
+          path="signup"
+          element={
+            <SignUp
+              setCurrentUser={(user) => {
+                console.log(user);
+                setUser(user);
+              }}
+            />
+          }
+        />
         <Route path="dashboard" element={<Dashboard user={user} />} />
         <Route path="profile" element={<Profile user={user} />}>
           <Route path="setting" element={<h1>Setting</h1>} />

@@ -5,17 +5,21 @@ const TextInput = ({ messageValue, handleChange, sendMessage, handleSend }) => {
   const [permission, setPermission] = useState(false);
   const [stream, setStream] = useState(null);
 
+  const [recording, setRecording] = useState(false);
+
   const getMicrophonePermission = async () => {
     if ("MediaRecorder" in window) {
       try {
+        setRecording(true);
         const streamData = await navigator.mediaDevices.getUserMedia({
           audio: true,
           video: false,
         });
         setPermission(true);
         setStream(streamData);
+        setRecording(false);
       } catch (err) {
-        alert(err.message);
+        setRecording(false);
       }
     } else {
       alert("The MediaRecorder API is not supported in your browser.");
@@ -47,13 +51,20 @@ const TextInput = ({ messageValue, handleChange, sendMessage, handleSend }) => {
                 d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
               ></path>
             </svg>
-            <div 
-              className="w-11 h-11 bg-transparent z-[-1] rounded-full absolute border border-grey-600 transition-all animate-[piing_1.5s_linear_infinite] "
+            <div
+              className={
+                recording
+                  ? `w-11 h-11 bg-transparent z-[-1] rounded-full absolute border border-grey-600 transition-all animate-[piing_1.5s_linear_infinite]`
+                  : ""
+              }
             ></div>
             <div
-              className="w-12 h-12 bg-gray-300 z-[-1] rounded-full absolute transition-all animate-[piingg_1.5s_linear_infinite] animation-delay-[2500ms]"
-            >
-            </div>
+              className={
+                recording
+                  ? "w-12 h-12 bg-gray-300 z-[-1] rounded-full absolute transition-all animate-[piingg_1.5s_linear_infinite] animation-delay-[2500ms]"
+                  : ""
+              }
+            ></div>
           </button>
         </span>
 
@@ -63,7 +74,7 @@ const TextInput = ({ messageValue, handleChange, sendMessage, handleSend }) => {
           onKeyDown={sendMessage}
           type="text"
           placeholder="Hello! I am feeling..."
-          class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3  text-sm"
+          class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-14 bg-gray-200 rounded-md py-5  text-sm"
         />
         <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
           <button

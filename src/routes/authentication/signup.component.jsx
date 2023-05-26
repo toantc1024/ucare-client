@@ -8,13 +8,13 @@ import {
 } from "../../utils/firebase/firebase.utils";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
-const SignUp = () => {
+const SignUp = ({ setCurrentUser }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("ToanTran2010@!");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
-  const [password, setPassword] = useState("ToanTran2010@!");
+  const [password, setPassword] = useState("");
 
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
@@ -43,9 +43,11 @@ const SignUp = () => {
       );
       await setUpNewProfile(userCredential.user, name);
       saveUser(userCredential.user);
+      setCurrentUser(userCredential.user);
+      localStorage.setItem("user", JSON.stringify(userCredential.user));
       navigate("/");
     } catch (error) {
-      const errorMessage = error.message;
+      setErrorMessage(error.message);
       console.log(errorMessage);
     }
   };
@@ -126,6 +128,7 @@ const SignUp = () => {
                   required=""
                 />
               </div>
+
               <div>
                 {!isConfirmPasswordValid ? (
                   <p className="text-red-500 text-xs italic">
@@ -156,6 +159,8 @@ const SignUp = () => {
                   required=""
                 />
               </div>
+              {<p className="text-red-500 text-xs italic">{errorMessage}</p>}
+
               {isPasswordMatch ? null : (
                 <p className="text-red-500 text-xs italic">{errorMessage}</p>
               )}
@@ -166,9 +171,7 @@ const SignUp = () => {
                 Sign up
               </button>
               <div class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-                <p class="mx-4 mb-0 text-center font-semibold">
-                  OR
-                </p>
+                <p class="mx-4 mb-0 text-center font-semibold">OR</p>
               </div>
 
               <p class="text-sm font-light text-white">

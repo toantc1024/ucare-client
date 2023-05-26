@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getUserProfile } from "../../utils/firebase/firebase.utils";
 
 const Profile = ({ user }) => {
-  console.log(user);
   return (
     <div className="flex w-full h-[75vh] items-center justify-center gap-2">
       <div className="flex items-start flex-col justify-center border-[1px] gap-2 border-black py-8 px-4 rounded-lg font-bold">
@@ -9,7 +9,7 @@ const Profile = ({ user }) => {
           User Profile
         </h1>
         <div className="flex flex-row items-center w-full justify-center gap-2">
-          <img src={user.photoURL} className="rounded-full" alt="" />
+          <img src={user?.photoURL} className="rounded-full" alt="" />
         </div>
 
         <div
