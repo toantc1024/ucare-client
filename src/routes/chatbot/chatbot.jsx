@@ -6,6 +6,8 @@ import Whalebg from "../../assets/whalebg.jpg";
 import messageText from "../../components/chatbot/message";
 import TextMessage from "../../components/chatbot/message";
 import RecommendPrompt from "../../components/chatbot/recommend";
+//import Modal from "../../components/chatbot/modal";
+
 const Chatbot = () => {
   const [messageValue, setMessageValue] = useState("");
   const [selectOptions, setSelectOptions] = useState(false);
