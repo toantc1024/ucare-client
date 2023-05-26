@@ -56,24 +56,21 @@ export const getUserProfile = async (user, name) => {
   try {
     const docRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(docRef);
-    console.log(docSnap, user);
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      await setUpNewProfile(user, name);
-      return document;
-    }
+    console.log(docSnap.data());
   } catch (error) {
     console.log(user.uid, error);
     return false;
   }
 };
 
-export const setUpNewProfile = async (user, name) => {
+export const setUpNewProfile = async (user, name, photoURL) => {
   try {
     console.log(user, name);
     const document = await setDoc(doc(db, "users", user.uid), {
-      name: name,
+      photoURL: photoURL ? photoURL : "",
+      healthInsuarance: "",
+      timestamp: new Date(),
+      displayName: name,
       email: user.email,
     });
     return document;

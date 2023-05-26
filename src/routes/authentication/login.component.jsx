@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   getUserProfile,
+  setUpNewProfile,
   signInGoogleWithPopup,
 } from "../../utils/firebase/firebase.utils";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,10 +9,35 @@ import {
   browserLocalPersistence,
   getAuth,
   setPersistence,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 
 const Login = ({ setCurrentUser }) => {
   const navigate = useNavigate();
+  const [errorMessages, setErrorMessages] = useState("");
+  const [remember, setRemember] = useState(true);
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    console.log(e);
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    console.log({ email, password });
+    try {
+      const { user } = await signInWithEmailAndPassword(
+        getAuth(),
+        email,
+        password
+      );
+      setCurrentUser(user);
+      if (remember) localStorage.setItem("user", JSON.stringify(user));
+      navigate("/");
+      setErrorMessages("");
+    } catch (error) {
+      setErrorMessages(error.message);
+    }
+  };
 
   return (
     <section className="">
@@ -21,7 +47,10 @@ const Login = ({ setCurrentUser }) => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
               Sign in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form
+              className="space-y-4 md:space-y-6"
+              onSubmit={(e) => handleSubmitForm(e)}
+            >
               <div>
                 <label
                   for="email"
@@ -48,19 +77,26 @@ const Login = ({ setCurrentUser }) => {
                 <input
                   type="password"
                   name="password"
-                  id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                  required=""
+                  className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  required
                 />
               </div>
+              {
+                <p className="text-red-400 font-bold text-xs italic">
+                  {errorMessages}
+                </p>
+              }
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
-                      id="remember"
+                      onChange={(e) => {
+                        setRemember(!remember);
+                      }}
                       aria-describedby="remember"
                       type="checkbox"
+                      checked={remember}
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
                       required=""
                     />
@@ -80,7 +116,7 @@ const Login = ({ setCurrentUser }) => {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 "
+                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 "
               >
                 Sign in
               </button>
@@ -88,18 +124,26 @@ const Login = ({ setCurrentUser }) => {
                 <p className="mx-4 mb-0 text-center font-semibold ">OR</p>
               </div>
 
-              <a
+              <button
                 onClick={async () => {
                   try {
                     await signInGoogleWithPopup();
                     const auth = getAuth();
                     setCurrentUser(auth.currentUser);
+
+                    localStorage.setItem(
+                      "user",
+                      JSON.stringify(auth.currentUser)
+                    );
+                    await setUpNewProfile(
+                      auth.currentUser,
+                      auth.currentUser.displayName,
+                      auth.currentUser.photoURL
+                    );
                     navigate("/");
                   } catch (error) {}
                 }}
                 className="mb-3 flex w-full items-center justify-center rounded-lg bg-primary px-7 pb-2.5 pt-3 text-center text-sm font-medium  leading-normal text-gray-700 bg-white drop-shadow-lg hover:bg-[rgba(255,255,255,.75)] transition-bg duration-100 ease-in-out"
-                href="#!"
-                role="button"
                 data-te-ripple-init
                 data-te-ripple-color="light"
               >
@@ -137,7 +181,7 @@ const Login = ({ setCurrentUser }) => {
                   </g>
                 </svg>
                 Continue with Goggle
-              </a>
+              </button>
               <p className="text-sm font-light text-white">
                 Don’t have an account yet?{" "}
                 <Link

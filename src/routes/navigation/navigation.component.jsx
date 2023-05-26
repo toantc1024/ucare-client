@@ -57,7 +57,7 @@ const Navigation = ({ user, setCurrentUser }) => {
                 to={"./chat"}
               >
                 Chat{" "}
-                <span class= "font-bold text-xs mr-2 px-2.5 py-0.5 rounded-full bg-sky-900 text-blue-300">
+                <span class="font-bold text-xs mr-2 px-2.5 py-0.5 rounded-full bg-sky-900 text-blue-300">
                   AI
                 </span>
               </Link>
@@ -69,11 +69,17 @@ const Navigation = ({ user, setCurrentUser }) => {
                     className="hover:cursor-pointer hover:bg-gray-200  p-1 rounded-full"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                   >
-                    <img
-                      className="h-10 w-10 hover:cursor-pointer hover:bg-gray-200 rounded-full"
-                      src={user.photoURL}
-                      alt=""
-                    />
+                    {user.photoURL ? (
+                      <img
+                        className="h-10 w-10 hover:cursor-pointer hover:bg-gray-200 rounded-full"
+                        src={user.photoURL}
+                        alt=""
+                      />
+                    ) : (
+                      <div className="h-10 w-10 hover:cursor-pointer hover:bg-gray-200 rounded-full bg-gradient-to-r from-sky-500 to-emerald-400 flex items-center justify-center text-white text-xl font-bold">
+                        W
+                      </div>
+                    )}
                   </div>
                   <div
                     class={`z-50 ${
@@ -82,9 +88,7 @@ const Navigation = ({ user, setCurrentUser }) => {
                     id="user-}dropdown"
                   >
                     <div class="px-4 py-3">
-                      <span class="block text-sm text-white">
-                        {user.name}
-                      </span>
+                      <span class="block text-sm text-white">{user.name}</span>
                       <span class="block text-sm truncate text-gray-400">
                         {user.email}
                       </span>

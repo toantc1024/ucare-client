@@ -50,7 +50,7 @@ const Chatbot = () => {
   useEffect(() => {
     const messages = document.getElementById("messages");
     messages.scrollTo({
-      top: messages.offsetHeight,
+      top: messages.scrollHeight,
       behavior: "smooth",
     });
   }, [chat]);
