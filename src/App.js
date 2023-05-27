@@ -64,7 +64,7 @@ const App = () => {
         <Route path="profile" element={<Profile user={user} />}>
           <Route path="setting" element={<h1>Setting</h1>} />
         </Route>
-        <Route path="chat" element={<Chatbot />} />
+        <Route path="chat" element={<Chatbot user={user} />} />
       </Route>
     </Routes>
   );

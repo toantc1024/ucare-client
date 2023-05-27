@@ -27,7 +27,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
 const provider = new GoogleAuthProvider();
@@ -72,6 +72,7 @@ export const setUpNewProfile = async (user, name, photoURL) => {
       timestamp: new Date(),
       displayName: name,
       email: user.email,
+      drinks: [],
     });
     return document;
   } catch (error) {

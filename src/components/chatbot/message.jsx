@@ -7,7 +7,9 @@ const TextMessage = ({ chat, setChat, currentChat }) => {
     bot: "bg-blue-500 text-white rounded-bl-none",
     user: "bg-gray-300 text-gray-600  rounded-br-none  ",
   };
-
+  React.useEffect(() => {
+    console.log(chat);
+  }, []);
   // bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-white
   return (
     <div class="w-full">
@@ -15,9 +17,14 @@ const TextMessage = ({ chat, setChat, currentChat }) => {
         <div class="flex flex-col space-y-2 text-sm max-w-2xl mx-2 order-1 w-auto">
           <div>
             <span
-              class={`w-full px-4 py-2 rounded-lg inline-block  ${
-                backgroundStyles[type]
-              } text-sm ${status === "pending" ? "animate-ping" : ""}}`}
+              class={`
+              ${status === "pending" && "animate-pulse font-bold"}
+
+              w-full px-4 py-2 rounded-lg inline-block ${
+                status === "pending"
+                  ? "bg-gradient-to-r from-sky-500 to-emerald-400 text-white"
+                  : backgroundStyles[type]
+              } text-sm`}
             >
               <span>{message}</span>
               {options && (
