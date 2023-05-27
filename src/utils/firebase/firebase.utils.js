@@ -56,7 +56,7 @@ export const getUserProfile = async (user, name) => {
   try {
     const docRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(docRef);
-    console.log(docSnap.data());
+    return docSnap.exists();
   } catch (error) {
     console.log(user.uid, error);
     return false;

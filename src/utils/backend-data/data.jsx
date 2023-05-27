@@ -1,12 +1,27 @@
 export const chatQuery = async (text) => {
   try {
-    const response = await fetch("http://localhost:8888/message", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    });
+    console.log(
+      process.env.REACT_APP_PRODUCTION,
+      `${
+        process.env.REACT_APP_PRODUCTION
+          ? "https://ucare.onrender.com"
+          : "http://localhost:8888"
+      }/message`
+    );
+    const response = await fetch(
+      `${
+        process.env.REACT_APP_PRODUCTION
+          ? "https://ucare.onrender.com"
+          : "http://localhost:8888"
+      }/message`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      }
+    );
     const message = await response.json();
     return message;
   } catch (error) {

@@ -135,11 +135,15 @@ const Login = ({ setCurrentUser }) => {
                       "user",
                       JSON.stringify(auth.currentUser)
                     );
-                    await setUpNewProfile(
-                      auth.currentUser,
-                      auth.currentUser.displayName,
-                      auth.currentUser.photoURL
-                    );
+
+                    const profile = await getUserProfile(auth.currentUser);
+                    if (!profile) {
+                      await setUpNewProfile(
+                        auth.currentUser,
+                        auth.currentUser.displayName,
+                        auth.currentUser.photoURL
+                      );
+                    }
                     navigate("/");
                   } catch (error) {}
                 }}
