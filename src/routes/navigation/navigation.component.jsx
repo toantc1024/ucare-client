@@ -5,7 +5,7 @@ import { getCurrentUser } from "../../utils/backend-data/user";
 import { fetchUser } from "../../utils/firebase/firebase.utils";
 import { getAuth } from "firebase/auth";
 
-const Navigation = () => {
+const Navigation = ({ user, setCurrentUser }) => {
   const navigate = useNavigate();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,18 +15,10 @@ const Navigation = () => {
     navigate(path);
   };
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const user = fetchUser();
-    console.log(user);
-    setUser(user);
-  }, [getAuth()]);
-
   return (
     <Fragment>
-      <nav class="flex gap-2 items-center justify-between relative fixed py-4 border-gray-200 dark:bg-gray-900 px-4 border-[1px] ">
-        <div class="w-full flex flex-wrap items-center justify-between mx-auto p-4 ml-4 mr-4">
+      <nav class="flex gap-2 items-center justify-between relative fixed py-4 bg-gray-900 px-4">
+        <div class="w-full  flex flex-wrap items-center justify-between mx-auto p-4 ml-4 mr-4">
           {
             // <div className="left-[-5px] rounded-full w-10 h-10 bg-gradient-to-r from-emerald-400 to-sky-500  absolute z-[-10] "></div>
           }
@@ -34,8 +26,8 @@ const Navigation = () => {
             className="font-bold relative hover:cursor-pointer"
             onClick={() => navigate("./")}
           >
-            <h1 className="text-3xl z-[100] ">WhaleCare</h1>
-            <div className="bg-gradient-to-r from-emerald-400 to-sky-500 bg-none  rounded-full  top-0 absolute  z-[0] right-[-10px] blur-4 drop-filter-blur">
+            <h1 className="text-3xl text-white z-[100] ">WhaleCare</h1>
+            <div className="bg-gradient-to-r from-emerald-400 to-sky-500 bg-none rounded-full  top-0 absolute  z-[0] right-[-10px] blur-4 drop-filter-blur">
               <sup className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-600 text-3xl">
                 +
               </sup>
@@ -47,104 +39,110 @@ const Navigation = () => {
               <Link
                 onClick={() => setIsMenuOpen(false)}
                 to={"./"}
-                className="hover:cursor-pointer hover:text-sky-500 font-semibold"
+                className="hover:cursor-pointer hover:text-sky-500 font-semibold text-white"
               >
                 Home
               </Link>
               <Link
                 onClick={() => setIsMenuOpen(false)}
                 to={"./dashboard"}
-                className="hover:cursor-pointer hover:text-sky-500 font-semibold"
+                className="hover:cursor-pointer hover:text-sky-500 font-semibold text-white"
               >
                 Dashboard
               </Link>
               <Link
                 onClick={() => setIsMenuOpen(false)}
                 href=""
-                className="flex items-center gap-2 hover:cursor-pointer hover:text-sky-500 font-semibold"
+                className="flex items-center gap-2 hover:cursor-pointer hover:text-sky-500 font-semibold text-white"
                 to={"./chat"}
               >
                 Chat{" "}
-                <span class="bg-sky-200 font-bold text-blue-800 text-xs mr-2 px-2.5 py-0.5 rounded-full dark:bg-sky-900 dark:text-blue-300">
+                <span class="font-bold text-xs mr-2 px-2.5 py-0.5 rounded-full bg-sky-900 text-blue-300">
                   AI
                 </span>
               </Link>
             </div>
             <div className="relative">
               {user ? (
-                <div
-                  className="hover:cursor-pointer hover:bg-gray-200  p-1 rounded-full"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                >
-                  <img
-                    className="h-10 w-10 rounded-full  hover:cursor-pointer hover:bg-gray-200 rounded-full"
-                    src="https://lh3.googleusercontent.com/a/AAcHTtfYV5CJXYi93tJ21f3JIVnQ_J6ep17JKkNDkSvjfQ=s83-c-mo"
-                    alt=""
-                  />
-                </div>
+                <Fragment>
+                  <div
+                    className="hover:cursor-pointer hover:bg-gray-200  p-1 rounded-full"
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  >
+                    {user.photoURL ? (
+                      <img
+                        className="h-10 w-10 hover:cursor-pointer hover:bg-gray-200 rounded-full"
+                        src={user.photoURL}
+                        alt=""
+                      />
+                    ) : (
+                      <div className="h-10 w-10 hover:cursor-pointer hover:bg-gray-200 rounded-full bg-gradient-to-r from-sky-500 to-emerald-400 flex items-center justify-center text-white text-xl font-bold">
+                        W
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    class={`z-50 ${
+                      !isMenuOpen ? "hidden" : ""
+                    } absolute right-[40px] md:right-[0px] my-4 text-base list-none divide-y rounded-lg shadow bg-gray-700 divide-gray-600`}
+                    id="user-}dropdown"
+                  >
+                    <div class="px-4 py-3">
+                      <span class="block text-sm text-white">{user.name}</span>
+                      <span class="block text-sm truncate text-gray-400">
+                        {user.email}
+                      </span>
+                    </div>
+                    <ul class="py-2" aria-labelledby="user-menu-button">
+                      <li>
+                        <Link
+                          onClick={() => setIsMenuOpen(false)}
+                          to={"./profile"}
+                          class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          onClick={() => setIsMenuOpen(false)}
+                          to={"./setting"}
+                          className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+                        >
+                          Settings
+                        </Link>
+                      </li>
+                      <li>
+                        <a
+                          onClick={() => {
+                            setCurrentUser(null);
+                            localStorage.removeItem("user");
+                            handleNavigate("./");
+                          }}
+                          className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+                        >
+                          Sign out
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </Fragment>
               ) : (
                 <div className="flex gap-2 items-center justify-center">
                   <button
                     onClick={() => handleNavigate("./login")}
-                    className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+                    className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-200 hover:text-blue-700"
                   >
                     Sign in
                   </button>
                   <button
                     onClick={() => handleNavigate("./signup")}
-                    className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+                    className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-200 hover:text-blue-700"
                   >
                     Sign up
                   </button>
                 </div>
               )}
-              <div
-                class={`z-50 ${
-                  !isMenuOpen ? "hidden" : ""
-                } absolute right-[40px] md:right-[0px] my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
-                id="user-}dropdown"
-              >
-                <div class="px-4 py-3">
-                  <span class="block text-sm text-gray-900 dark:text-white">
-                    Tran Cong Toan
-                  </span>
-                  <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                    tctoan1024@gmail.com
-                  </span>
-                </div>
-                <ul class="py-2" aria-labelledby="user-menu-button">
-                  <li>
-                    <Link
-                      onClick={() => setIsMenuOpen(false)}
-                      to={"./profile"}
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      onClick={() => setIsMenuOpen(false)}
-                      to={"./setting"}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Settings
-                    </Link>
-                  </li>
-                  <li>
-                    <a
-                      href=""
-                      onClick={() => {
-                        localStorage.removeItem("user");
-                        handleNavigate("./");
-                      }}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>
