@@ -6,7 +6,11 @@ import {
   saveUser,
   setUpNewProfile,
 } from "../../utils/firebase/firebase.utils";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
 
 const SignUp = ({ setCurrentUser }) => {
   const [name, setName] = useState("");
@@ -41,6 +45,13 @@ const SignUp = ({ setCurrentUser }) => {
         email,
         password
       );
+
+      // Update name to user
+
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: `https://ui-avatars.com/api/?background=random&name=${name}`,
+      });
       await setUpNewProfile(userCredential.user, name);
       saveUser(userCredential.user);
       setCurrentUser(userCredential.user);
