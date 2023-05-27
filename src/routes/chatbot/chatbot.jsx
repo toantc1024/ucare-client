@@ -6,19 +6,33 @@ import Whalebg from "../../assets/whalebg.jpg";
 import messageText from "../../components/chatbot/message";
 import TextMessage from "../../components/chatbot/message";
 import RecommendPrompt from "../../components/chatbot/recommend";
+import { useNavigate } from "react-router-dom";
 //import Modal from "../../components/chatbot/modal";
 
-const Chatbot = () => {
+const Chatbot = ({ user }) => {
   const [messageValue, setMessageValue] = useState("");
   const [selectOptions, setSelectOptions] = useState(false);
+  const [displayName, setDisplayName] = useState(null);
+  const [uid, setUid] = useState(null);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (user) {
+      setDisplayName(user.displayName);
+      setUid(user.uid);
+    } else {
+      return;
+    }
+  }, []);
   const addItemToChat = (message) => {
     setChat([...chat, message]);
   };
 
   const [chat, setChat] = useState([
     {
-      message: "Hi, I'm WhaleCare. How can I help you?",
+      message: `Hi ${
+        displayName ? displayName.split(" ")[0] : ""
+      }, I'm WhaleCare. How can I help you?`,
       options: [
         {
           text: "Tell me about you",
