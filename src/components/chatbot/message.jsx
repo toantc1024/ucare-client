@@ -18,7 +18,7 @@ const TextMessage = ({ chat, setChat, currentChat }) => {
           <div>
             <span
               class={`
-              ${status === "pending" && "animate-pulse font-bold"}
+              ${status === "pending" && " font-bold"}
 
               w-full px-4 py-2 rounded-lg inline-block ${
                 status === "pending"

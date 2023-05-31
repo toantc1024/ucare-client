@@ -92,8 +92,8 @@ const Chatbot = ({ user }) => {
           console.log(response);
           const newChat = [
             ...chat,
-            { message: messageValue, type: "user" },
-            { message: response.response[0].text, type: "bot" },
+            { message: messageValue, type: "user", status: "" },
+            { message: response.response[0].text, type: "bot", status: "" },
           ];
           setChat(newChat);
         } catch (error) {}
