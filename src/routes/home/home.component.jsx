@@ -1,10 +1,18 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { MdMedicalServices, MdHealthAndSafety } from "react-icons/md";
 import { Link } from "react-router-dom";
 import FirstImage from "../../assets/f1.jpeg";
 import SecondImage from "../../assets/f2.jpeg";
-
+import { healthQuotes } from "../../utils/backend-data/data";
 const Home = () => {
+  const [userName, setUserName] = useState(null);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setUserName(user.displayName);
+    }
+  }, []);
+
   return (
     <Fragment>
       <section class="bg-white">
@@ -48,6 +56,9 @@ const Home = () => {
         </div>
       </section>
 
+      <section className="bg-white m-4">
+        <div class="flex flex-col gap-2 w-full text-center text-4xl font-bold justify-center items-center "></div>
+      </section>
       <section class="bg-white dark:bg-gray-900">
         <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
           <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">

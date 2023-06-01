@@ -86,7 +86,7 @@ export default function FitModal({ showModal, setShowModal, user }) {
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-50 my-6 mx-auto max-w-4xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none h-full">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none max-h-[calc(100%-10vh)]">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-4xl font-extrabold text-gray-900 ">
@@ -339,7 +339,9 @@ export default function FitModal({ showModal, setShowModal, user }) {
 
                       {!generating && (
                         <div
+                          className=" overflow-y-auto ml-2 text-green-900"
                           style={{
+                            maxHeight: "450px",
                             minHeight: "6em",
                             cursor: "text",
                             color: "black",

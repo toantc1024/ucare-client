@@ -105,17 +105,17 @@ const Navigation = ({ user, setCurrentUser }) => {
                         {user.email}
                       </span>
                     </div>
-                    <ul class="py-2" aria-labelledby="user-menu-button">
-                      <li>
+                    <ul class="py-2 userTag" aria-labelledby="user-menu-button">
+                      <div className="userTag">
                         <Link
                           onClick={() => setIsMenuOpen(false)}
                           to={"./profile"}
                           class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
                         >
-                          Profile
+                          WhaleInfo
                         </Link>
-                      </li>
-                      <li>
+                      </div>
+                      <div className="userTag">
                         <Link
                           onClick={() => setIsMenuOpen(false)}
                           to={"./setting"}
@@ -123,8 +123,8 @@ const Navigation = ({ user, setCurrentUser }) => {
                         >
                           Settings
                         </Link>
-                      </li>
-                      <li>
+                      </div>
+                      <div className="userTag">
                         <a
                           onClick={() => {
                             setCurrentUser(null);
@@ -135,7 +135,7 @@ const Navigation = ({ user, setCurrentUser }) => {
                         >
                           Sign out
                         </a>
-                      </li>
+                      </div>
                     </ul>
                   </div>
                 </Fragment>

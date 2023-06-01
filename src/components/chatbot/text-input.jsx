@@ -80,7 +80,7 @@ const TextInput = ({ messageValue, handleChange, sendMessage, handleSend }) => {
           <button
             onClick={() => handleSend()}
             type="button"
-            class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 hover:bg-blue-400 focus:outline-none  text-sm"
+            class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition-all mr-2 duration-400 ease-in-out text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-emerald-300 hover:to-sky-400 focus:outline-none  text-sm"
           >
             <span class="font-bold">Send</span>
             <svg

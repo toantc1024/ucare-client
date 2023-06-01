@@ -114,12 +114,10 @@ const Chatbot = ({ user }) => {
 
   return (
     <div className="h-[60vh] relative">
-      <div class="flex w-full font-extrabold text-5xl justify-center py-12 font-extrabold text-transparent text-4xl  text-white   bg-gradient-to-r from-sky-400 to-emerald-400 relative items-center">
+      <div class="flex w-full font-extrabold text-5xl justify-center py-12 font-extrabold text-4xl  text-white   bg-gradient-to-r from-sky-400 to-emerald-400 relative items-center">
         WhaleAI
         <div className="absolute top-50 right-20 text-4xl shadow-lg rounded-full border w-20 h-20 flex items-center justify-center hover:scale-[1.2] transition-all ease-in-out duration-200 cursor-pointer font-extrabold bg-white">
-          <span className="text-transparent text-5xl  bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-600">
-            W
-          </span>
+          <span className="">🐳</span>
         </div>
       </div>
       <div

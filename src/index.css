@@ -56,12 +56,69 @@ code {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: linear-gradient(
+  background: rgba(1, 196, 255, 0.537);
+  /* background: linear-gradient(
     180deg,
     rgb(218, 218, 218) 0%,
     rgba(103, 174, 255, 0.534) 35%,
     rgba(106, 252, 169, 0.534) 100%
-  );
-  border-radius: 14px;
+  ); */
+  border-radius: 13px;
   border: 3px solid var(--primary);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(1, 196, 255, 0.637);
+  cursor: pointer;
+}
+
+.workout > h1 {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.workout {
+  margin-left: 5rem;
+}
+
+.workout > h2,
+.workout > h3 {
+  text-align: left;
+  margin-top: 12px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.workout > ul {
+  list-style: cricle;
+  margin: 0;
+  padding: 0;
+}
+
+.workout > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--secondary);
+}
+
+ol {
+  padding-left: 50px;
+}
+
+li {
+  padding-left: 16px;
+  margin-top: 24px;
+  position: relative;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+strong {
+  color: black;
 }

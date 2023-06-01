@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { getUserProfile } from "../../utils/firebase/firebase.utils";
+import React from "react";
 
 const Profile = ({ user }) => {
   return (

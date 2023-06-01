@@ -29,35 +29,22 @@ const Dashboard = ({ user }) => {
       today.getMonth() + 1
     }/${today.getFullYear()}`;
 
-    const group = drinked
-      .sort((a, b) => {
-        return -new Date(a.timestamp) + new Date(b.timestamp);
-      })
-      .reduce((acc, curr) => {
-        const date = new Date(curr.timestamp);
-        const key = `${date.getDate()}/${
-          date.getMonth() + 1
-        }/${date.getFullYear()}`;
-        if (!acc[key]) {
-          acc[key] = [];
-        }
-        if (key === todayKey) newTotal += curr.amount;
-        acc[key].push(curr);
-        return acc;
-      }, {});
+    const group = drinked.reduce((acc, curr) => {
+      const date = new Date(curr.timestamp);
+      const key = `${date.getDate()}/${
+        date.getMonth() + 1
+      }/${date.getFullYear()}`;
+
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      if (key === todayKey) newTotal += curr.amount;
+      acc[key].push(curr);
+      return acc;
+    }, {});
     setTotalWater(newTotal);
     setGroupDrinked(group);
   }, [drinked]);
-
-  // useEffect(() => {
-  //   let newSum = 0;
-  //   if (!groupDrinked || Object.entries(groupDrinked)[0][1]) return;
-
-  //   Object.entries(groupDrinked)[0][1].forEach((item) => {
-  //     newSum += item.amount;
-  //   });
-  //   setTotalWater(newSum);
-  // }, [groupDrinked]);
 
   useEffect(() => {
     console.log(user);
@@ -84,11 +71,11 @@ const Dashboard = ({ user }) => {
       <div className="flex w-full font-extrabold text-5xl justify-center mt-8 py-4 font-extrabold text-transparent text-4xl  text-white  bg-gradient-to-r from-sky-400 to-sky-600 relative">
         {`Water Drinked: ${totalWater} ml`}
         <div className="absolute bottom-0 right-20 text-4xl bg-white shadow-lg rounded-full border w-20 h-20 flex items-center justify-center hover:scale-[1.2] transition-all ease-in-out duration-200 cursor-pointer">
-          🐳
+          🌊
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 m-4">
+      <div className="flex flex-col m-4">
         <div
           className="col-span-full mt-4 flex w-full   p-4 bg-white border border-gray-200 
         rounded-lg shadow flex items-center justify-center gap-4 "
@@ -119,53 +106,55 @@ const Dashboard = ({ user }) => {
           </div>
         </div>
         {drinked &&
-          Object.entries(groupDrinked).map(([key, value]) => {
-            return (
-              <Fragment>
-                <h1 className="max-w-sm py-4  rounded-lg  dark:border-gray-700 flex gap-2 flex-col items-center justify-center col-span-full text-2xl font-extrabold bg-sky-600 text-white">
-                  {key}
-                </h1>
-                <Fragment>
-                  {value.map(({ amount, type, unit, timestamp }) => {
-                    return (
-                      <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg flex gap-2 flex-col items-center justify-center hover:scale-[1.05] transition-all ease-in-out duration-200 group cursor-pointer hover:bg-sky-100">
-                        <div className="group-hover:rotate-12 group-hover:scale-[1.1] transition-rotate transition-scale ease-in-out duration-150 w-10 h-10 drop-shadow-lg rounded-full">
-                          {type === "glass" ? (
-                            <GiWaterDrop className="text-sky-400 w-10 h-10" />
-                          ) : type === "cup" ? (
-                            <BsCupStraw className="text-sky-400 w-10 h-10" />
-                          ) : (
-                            <BsCupFill className="text-sky-400 w-10 h-10" />
-                          )}
-                        </div>
-                        <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
-                          {amount} {unit}
-                        </p>
-                        {timestamp && (
+          Object.entries(groupDrinked)
+            .sort((a, b) => (a[0] < b[0] ? -1 : 1))
+            .map(([key, value]) => {
+              return (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 m-2 bg-sky-500 p-4 rounded-lg">
+                  <h1 className="max-w-sm py-4  rounded-lg  dark:border-gray-700 flex gap-2 flex-col items-center justify-center col-span-full text-2xl font-extrabold bg-sky-600 text-white">
+                    {key}
+                  </h1>
+                  <Fragment>
+                    {value.map(({ amount, type, unit, timestamp }) => {
+                      return (
+                        <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg flex gap-2 flex-col items-center justify-center hover:scale-[1.05] transition-all ease-in-out duration-200 group cursor-pointer hover:bg-sky-100">
+                          <div className="group-hover:rotate-12 group-hover:scale-[1.1] transition-rotate transition-scale ease-in-out duration-150 w-10 h-10 drop-shadow-lg rounded-full">
+                            {type === "glass" ? (
+                              <GiWaterDrop className="text-sky-400 w-10 h-10" />
+                            ) : type === "cup" ? (
+                              <BsCupStraw className="text-sky-400 w-10 h-10" />
+                            ) : (
+                              <BsCupFill className="text-sky-400 w-10 h-10" />
+                            )}
+                          </div>
                           <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
-                            {new Date(timestamp).toLocaleDateString("en-US", {
-                              weekday: "long",
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                              hour: "numeric",
-                              minute: "numeric",
-                            })}
+                            {amount} {unit}
                           </p>
-                        )}
-                        <a
-                          href="#"
-                          className="inline-flex items-center text-blue-600 hover:underline"
-                        >
-                          Remove
-                        </a>
-                      </div>
-                    );
-                  })}
-                </Fragment>
-              </Fragment>
-            );
-          })}
+                          {timestamp && (
+                            <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
+                              {new Date(timestamp).toLocaleDateString("en-US", {
+                                weekday: "long",
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                              })}
+                            </p>
+                          )}
+                          <a
+                            href="#"
+                            className="inline-flex items-center text-blue-600 hover:underline"
+                          >
+                            Remove
+                          </a>
+                        </div>
+                      );
+                    })}
+                  </Fragment>
+                </div>
+              );
+            })}
       </div>
     </div>
   );

@@ -15,6 +15,8 @@ const Fitness = ({ user }) => {
     EditorState.createEmpty()
   );
 
+  const [data, setData] = useState("");
+
   const editor = React.useRef(null);
   function focusEditor() {
     editor.current.focus();
@@ -36,7 +38,10 @@ const Fitness = ({ user }) => {
           blocksFromHTML.contentBlocks,
           blocksFromHTML.entityMap
         );
+        console.log(workList);
+        setData(workList);
         setLoading(false);
+        console.log(state);
         setEditorState(EditorState.createWithContent(state));
       }
     );
@@ -56,6 +61,20 @@ const Fitness = ({ user }) => {
           className="col-span-full mt-4 flex w-full   p-4 bg-white border border-gray-200 
       rounded-lg shadow flex items-center justify-center gap-4 "
         >
+          <div
+            class="group bg-emerald-500  min-w-[94px] cursor-pointer rounded-lg h-28 drop-shadow-xl flex flex-col gap-3 items-center justify-center hover:bg-emerald-600 duration-150 transition-background ease-in-out rounded-full"
+            tabindex="0"
+            onClick={() => setShowModal(true)}
+          >
+            <div class="w-10 h-10 rounded-full shadow-lg bg-emerald-300 group-hover:bg-white flex items-center justify-center font-bold ">
+              <span className="text-white group-hover:text-emerald-900 duration-150  transition-text ease-in-out">
+                ⌚
+              </span>
+            </div>
+            <p class="text-sm text-white group-hover:text-white text-white font-bold">
+              Keep track
+            </p>
+          </div>
           <div
             class="group bg-emerald-500  min-w-[94px] cursor-pointer rounded-lg h-28 drop-shadow-xl flex flex-col gap-3 items-center justify-center hover:bg-emerald-600 duration-150 transition-background ease-in-out rounded-full"
             tabindex="0"
@@ -86,7 +105,7 @@ const Fitness = ({ user }) => {
         </div>
       </div>
 
-      <div className="h-full w-auto max-h-[calc(100%-20rem)] m-4 mt-0 rounded-lg bg-emerald-500 text-white ">
+      <div className="h-[550px] w-auto max-h-[calc(100%-20rem)] m-4 mt-0 rounded-lg bg-emerald-500 text-white ">
         {loading ? (
           <div className="flex items-center justify-center h-full">
             <div role="status">
@@ -110,22 +129,30 @@ const Fitness = ({ user }) => {
             </div>
           </div>
         ) : (
-          <div
-            className=" overflow-y-auto ml-2 text-green-900"
-            style={{
-              maxHeight: "100%",
-              minHeight: "6em",
-              cursor: "text",
-            }}
-            onClick={focusEditor}
-          >
-            <Editor
-              ref={editor}
-              editorState={editorState}
-              onChange={setEditorState}
-              placeholder="Write something!"
-            />
-          </div>
+          data && (
+            <div className="max-h-[550px] overflow-y-auto ">
+              <div
+                className="workout"
+                dangerouslySetInnerHTML={{ __html: data }}
+              ></div>
+            </div>
+          )
+          // <div
+          //   className=" overflow-y-auto ml-2 text-green-900"
+          //   style={{
+          //     maxHeight: "100%",
+          //     minHeight: "6em",
+          //     cursor: "text",
+          //   }}
+          //   onClick={focusEditor}
+          // >
+          //   <Editor
+          //     ref={editor}
+          //     editorState={editorState}
+          //     onChange={setEditorState}
+          //     placeholder="Write something!"
+          //   />
+          // </div>
         )}
       </div>
 
