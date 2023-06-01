@@ -11,6 +11,7 @@ import { fetchUser } from "./utils/firebase/firebase.utils";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
 import Dashboard from "./routes/dashboard/dashboard";
+import Fitness from "./routes/fitness/fitness";
 const App = () => {
   const [user, setUser] = useState(null);
   const [language, setLanguage] = useState("en");
@@ -61,6 +62,7 @@ const App = () => {
           }
         />
         <Route path="dashboard" element={<Dashboard user={user} />} />
+        <Route path="fit" element={<Fitness user={user} />} />
         <Route path="profile" element={<Profile user={user} />}>
           <Route path="setting" element={<h1>Setting</h1>} />
         </Route>

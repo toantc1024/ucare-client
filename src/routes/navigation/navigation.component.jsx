@@ -17,7 +17,7 @@ const Navigation = ({ user, setCurrentUser }) => {
 
   return (
     <Fragment>
-      <nav class="flex gap-2 items-center justify-between relative fixed py-4 bg-gray-900 px-4">
+      <nav class="flex gap-2 items-center justify-between relative fixed top-0 bg-gray-900 px-4 h-28">
         <div class="w-full  flex flex-wrap items-center justify-between mx-auto p-4 ml-4 mr-4">
           {
             // <div className="left-[-5px] rounded-full w-10 h-10 bg-gradient-to-r from-emerald-400 to-sky-500  absolute z-[-10] "></div>
@@ -43,6 +43,7 @@ const Navigation = ({ user, setCurrentUser }) => {
               >
                 Home
               </Link>
+
               <Link
                 onClick={() => setIsMenuOpen(false)}
                 to={"./dashboard"}
@@ -50,13 +51,25 @@ const Navigation = ({ user, setCurrentUser }) => {
               >
                 Dashboard
               </Link>
+
+              <Link
+                onClick={() => setIsMenuOpen(false)}
+                to={"./fit"}
+                className="flex items-center gap-2 hover:cursor-pointer hover:text-emerald-200 font-semibold text-white"
+              >
+                Whale
+                <span class="font-bold text-xs mr-2 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white-300">
+                  Fit
+                </span>
+              </Link>
+
               <Link
                 onClick={() => setIsMenuOpen(false)}
                 href=""
                 className="flex items-center gap-2 hover:cursor-pointer hover:text-sky-500 font-semibold text-white"
                 to={"./chat"}
               >
-                Chat{" "}
+                Whale{" "}
                 <span class="font-bold text-xs mr-2 px-2.5 py-0.5 rounded-full bg-sky-900 text-blue-300">
                   AI
                 </span>
@@ -85,7 +98,6 @@ const Navigation = ({ user, setCurrentUser }) => {
                     class={`z-50 ${
                       !isMenuOpen ? "hidden" : ""
                     } absolute right-[40px] md:right-[0px] my-4 text-base list-none divide-y rounded-lg shadow bg-gray-700 divide-gray-600`}
-                    id="user-}dropdown"
                   >
                     <div class="px-4 py-3">
                       <span class="block text-sm text-white">{user.name}</span>

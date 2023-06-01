@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { db, getUserProfile } from "../../utils/firebase/firebase.utils";
 import { doc, onSnapshot } from "firebase/firestore";
 import { GiWaterFlask, GiWaterDrop } from "react-icons/gi";
+import { BsFillFilterCircleFill, BsCupStraw, BsCupFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../components/dashboard/modal";
 const Dashboard = ({ user }) => {
@@ -22,18 +23,29 @@ const Dashboard = ({ user }) => {
 
   useEffect(() => {
     // Group by timestamp
+    let newTotal = 0;
+    const today = new Date();
+    const todayKey = `${today.getDate()}/${
+      today.getMonth() + 1
+    }/${today.getFullYear()}`;
 
-    const group = drinked.reduce((acc, curr) => {
-      const date = new Date(curr.timestamp);
-      const key = `${date.getDate()}/${
-        date.getMonth() + 1
-      }/${date.getFullYear()}`;
-      if (!acc[key]) {
-        acc[key] = [];
-      }
-      acc[key].push(curr);
-      return acc;
-    }, {});
+    const group = drinked
+      .sort((a, b) => {
+        return -new Date(a.timestamp) + new Date(b.timestamp);
+      })
+      .reduce((acc, curr) => {
+        const date = new Date(curr.timestamp);
+        const key = `${date.getDate()}/${
+          date.getMonth() + 1
+        }/${date.getFullYear()}`;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        if (key === todayKey) newTotal += curr.amount;
+        acc[key].push(curr);
+        return acc;
+      }, {});
+    setTotalWater(newTotal);
     setGroupDrinked(group);
   }, [drinked]);
 
@@ -64,91 +76,98 @@ const Dashboard = ({ user }) => {
   }, [user]);
 
   return (
-    <Fragment>
+    <div className="w-full flex flex-col text-white bg-gradient-to-r from-sky-400 to-sky-600">
       <Modal
         showModal={showModal}
         setShowModal={(value) => setShowModal(value)}
       />
-      {
-        // <div className="flex w-full font-extrabold text-5xl justify-center mt-8 font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r from-sky-400 to-sky-600">{`Water Drinked: ${totalWater} ml`}</div>
-      }
-      <div
-        className="m-4 flex w-full hover:bg-sky-200 cursor-pointer  max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex items-center justify-center flex-col font-extrabold text-white bg-gradient-to-r from-sky-500 to-sky-600"
-        onClick={() => setShowModal(true)}
-      >
-        <div className="w-10  h-10 relative">
-          <p className="absolute top-50 right-50 font-bold text-2xl flex gap-1">
-            <GiWaterFlask className="text-white w-10 h-10" />
-            <span>+</span>
-          </p>
+      <div className="flex w-full font-extrabold text-5xl justify-center mt-8 py-4 font-extrabold text-transparent text-4xl  text-white  bg-gradient-to-r from-sky-400 to-sky-600 relative">
+        {`Water Drinked: ${totalWater} ml`}
+        <div className="absolute bottom-0 right-20 text-4xl bg-white shadow-lg rounded-full border w-20 h-20 flex items-center justify-center hover:scale-[1.2] transition-all ease-in-out duration-200 cursor-pointer">
+          🐳
         </div>
-        <p>Add water</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 m-4">
+        <div
+          className="col-span-full mt-4 flex w-full   p-4 bg-white border border-gray-200 
+        rounded-lg shadow flex items-center justify-center gap-4 "
+        >
+          <div
+            class="group bg-sky-500  min-w-[94px] cursor-pointer rounded-lg h-28 drop-shadow-xl flex flex-col gap-3 items-center justify-center hover:bg-sky-600 duration-150 transition-background ease-in-out rounded-full"
+            onClick={() => setShowModal(true)}
+            tabindex="0"
+          >
+            <div class="w-10 h-10 rounded-full shadow-lg bg-sky-400 group-hover:bg-white flex items-center justify-center font-bold ">
+              <BsCupFill className="text-white group-hover:text-sky-900 duration-150  transition-text ease-in-out" />
+            </div>
+            <p class="text-sm text-white group-hover:text-white text-white font-bold">
+              New water
+            </p>
+          </div>
+          <div
+            class="group bg-sky-500  min-w-[94px] cursor-pointer rounded-lg h-28 drop-shadow-xl flex flex-col gap-3 items-center justify-center hover:bg-sky-600 duration-150 transition-background ease-in-out rounded-full"
+            onClick={() => setShowModal(true)}
+            tabindex="0"
+          >
+            <div class="w-10 h-10 rounded-full shadow-lg bg-sky-400 group-hover:bg-white flex items-center justify-center font-bold ">
+              <BsFillFilterCircleFill className="text-white group-hover:text-sky-900 duration-150  transition-text ease-in-out" />
+            </div>
+            <p class="text-sm text-white group-hover:text-white text-white font-bold">
+              Filter
+            </p>
+          </div>
+        </div>
         {drinked &&
-          Object.entries(groupDrinked)
-            .sort((a, b) => b[0] - a[0])
-            .map(([key, value]) => {
-              return (
+          Object.entries(groupDrinked).map(([key, value]) => {
+            return (
+              <Fragment>
+                <h1 className="max-w-sm py-4  rounded-lg  dark:border-gray-700 flex gap-2 flex-col items-center justify-center col-span-full text-2xl font-extrabold bg-sky-600 text-white">
+                  {key}
+                </h1>
                 <Fragment>
-                  <h1 className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex gap-2 flex-col items-center justify-center  col-span-full font-4xl font-extrabold bg-gradient-to-r from-sky-400 to-emerald-500 text-white">
-                    {key}
-                  </h1>
-                  <Fragment>
-                    {value.map(({ amount, type, unit, timestamp }) => {
-                      return (
-                        <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex gap-2 flex-col items-center justify-center ">
-                          <div className="w-10 h-10 drop-shadow-lg rounded-full">
-                            <GiWaterDrop
-                              className={`text-sky-400 ${
-                                type === "glass"
-                                  ? "w-10 h-10"
-                                  : type === "cup"
-                                  ? "w-8 h-8 "
-                                  : "w-6 h-6"
-                              }`}
-                            />
-                          </div>
-                          <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
-                            {amount} {unit}
-                          </p>
-                          {timestamp && (
-                            <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
-                              {new Date(timestamp).toLocaleDateString("en-US", {
-                                weekday: "long",
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                                hour: "numeric",
-                                minute: "numeric",
-                              })}
-                            </p>
+                  {value.map(({ amount, type, unit, timestamp }) => {
+                    return (
+                      <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg flex gap-2 flex-col items-center justify-center hover:scale-[1.05] transition-all ease-in-out duration-200 group cursor-pointer hover:bg-sky-100">
+                        <div className="group-hover:rotate-12 group-hover:scale-[1.1] transition-rotate transition-scale ease-in-out duration-150 w-10 h-10 drop-shadow-lg rounded-full">
+                          {type === "glass" ? (
+                            <GiWaterDrop className="text-sky-400 w-10 h-10" />
+                          ) : type === "cup" ? (
+                            <BsCupStraw className="text-sky-400 w-10 h-10" />
+                          ) : (
+                            <BsCupFill className="text-sky-400 w-10 h-10" />
                           )}
-                          <a
-                            href="#"
-                            className="inline-flex items-center text-blue-600 hover:underline"
-                          >
-                            Remove
-                            <svg
-                              className="w-5 h-5 ml-2"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
-                            </svg>
-                          </a>
                         </div>
-                      );
-                    })}
-                  </Fragment>
+                        <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
+                          {amount} {unit}
+                        </p>
+                        {timestamp && (
+                          <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
+                            {new Date(timestamp).toLocaleDateString("en-US", {
+                              weekday: "long",
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                              hour: "numeric",
+                              minute: "numeric",
+                            })}
+                          </p>
+                        )}
+                        <a
+                          href="#"
+                          className="inline-flex items-center text-blue-600 hover:underline"
+                        >
+                          Remove
+                        </a>
+                      </div>
+                    );
+                  })}
                 </Fragment>
-              );
-            })}
+              </Fragment>
+            );
+          })}
       </div>
-    </Fragment>
+    </div>
   );
 };
 

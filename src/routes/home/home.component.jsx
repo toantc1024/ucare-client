@@ -15,7 +15,7 @@ const Home = () => {
             </h1>
             <p class="text-lg w-[300px] font-semibold max-w-40 text-wrwap pb-5">
               Ask about health care and get the best answer from AI Empowered
-              bot, and doctors!
+              bot, clear your fitness goals and more!
             </p>
             <Link
               to={"./chat"}
@@ -47,6 +47,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       <section class="bg-white dark:bg-gray-900">
         <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
           <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">

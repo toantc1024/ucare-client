@@ -73,6 +73,7 @@ export const setUpNewProfile = async (user, name, photoURL) => {
       displayName: name,
       email: user.email,
       drinks: [],
+      workout: "",
     });
     return document;
   } catch (error) {
