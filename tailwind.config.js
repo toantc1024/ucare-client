@@ -18,38 +18,38 @@ module.exports = {
         },
       },
       animation: {
-        piing: 'piing 1.5s linear infinite',
-        piingg: 'piingg 1.5s linear infinite'
+        piing: "piing 1.5s linear infinite",
+        piingg: "piingg 1.5s linear infinite",
       },
       keyframes: {
         piing: {
-          '0%': {
-            transform: 'scale(1.2)' 
+          "0%": {
+            transform: "scale(1.2)",
           },
-          '50%': {
-            transform: 'scale(1.8)',
-            opacity: 0.5
+          "50%": {
+            transform: "scale(1.8)",
+            opacity: 0.5,
           },
-          '100%': {
-            transform: 'scale(2.4)',
-            opacity: 0
+          "100%": {
+            transform: "scale(2.4)",
+            opacity: 0,
           },
         },
         piingg: {
-          '0%': {
-            transform: 'scale(1.2)' ,
-            opacity: 0.6
+          "0%": {
+            transform: "scale(1.2)",
+            opacity: 0.6,
           },
-          '50%': {
-            transform: 'scale(1.6)',
-            opacity: 0.5
+          "50%": {
+            transform: "scale(1.6)",
+            opacity: 0.5,
           },
-          '100%': {
-            transform: 'scale(2)',
-            opacity: 0
-          }
-        }
-      }
+          "100%": {
+            transform: "scale(2)",
+            opacity: 0,
+          },
+        },
+      },
     },
   },
   plugins: [require("./src/assets/animationDelay")],
